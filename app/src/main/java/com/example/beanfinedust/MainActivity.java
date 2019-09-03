@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.title("서울");
         markerOptions.snippet("한국의 수도");
         googleMap.addMarker(markerOptions);
-        //test
+        //test2
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
