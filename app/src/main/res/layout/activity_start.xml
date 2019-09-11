@@ -11,7 +11,6 @@
 
         <Button
             android:id="@+id/start_btn"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/_270sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginBottom="@dimen/_100sdp"
@@ -21,12 +20,10 @@
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/login_btn"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/_270sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginBottom="@dimen/_15sdp"
@@ -42,7 +39,6 @@
 
         <Button
             android:id="@+id/register_btn"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/_270sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginBottom="@dimen/_100sdp"

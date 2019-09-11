@@ -1,5 +1,6 @@
 package com.example.beanfinedust;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,12 +15,17 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_start);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_start);
 
-        binding.startBtn.setOnClickListener( v -> {
+        binding.startBtn.setOnClickListener(v -> {
             binding.startBtn.setVisibility(View.GONE);
             binding.loginBtn.setVisibility(View.VISIBLE);
             binding.registerBtn.setVisibility(View.VISIBLE);
+        });
+
+        binding.loginBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         });
     }
 }
