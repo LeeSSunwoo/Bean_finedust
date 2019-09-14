@@ -10,4 +10,6 @@
 
     <string name="login_email">Email</string>
     <string name="login_pwd">Password</string>
+    <string name="login_name">Name</string>
+    <string name="login_pass_check">Confirm Password</string>
 </resources>

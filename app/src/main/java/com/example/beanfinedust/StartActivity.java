@@ -2,7 +2,8 @@ package com.example.beanfinedust;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.beanfinedust.databinding.ActivityStartBinding;
 
@@ -17,15 +18,43 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start);
 
+        Animation fade_out = AnimationUtils.loadAnimation(this,R.anim.fade_out);
+        Animation fade_in = AnimationUtils.loadAnimation(this,R.anim.fade_in);
+
         binding.startBtn.setOnClickListener(v -> {
-            binding.startBtn.setVisibility(View.GONE);
-            binding.loginBtn.setVisibility(View.VISIBLE);
-            binding.registerBtn.setVisibility(View.VISIBLE);
+
+//            binding.startBtn.setVisibility(View.GONE);
+//            binding.loginBtn.setVisibility(View.VISIBLE);
+//            binding.registerBtn.setVisibility(View.VISIBLE);
+            binding.startBtn.startAnimation(fade_out);
+            binding.loginBtn.startAnimation(fade_in);
+            binding.registerBtn.startAnimation(fade_in);
         });
 
         binding.loginBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
+
+        binding.registerBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
+
+        fade_out.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
         });
     }
+
 }
