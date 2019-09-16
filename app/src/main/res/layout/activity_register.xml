@@ -45,8 +45,8 @@
             android:id="@+id/name"
             style="@style/login_edit"
             android:layout_marginTop="16dp"
-            android:inputType="textPersonName"
             android:hint="@string/login_name"
+            android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -54,8 +54,9 @@
         <EditText
             android:id="@+id/pass_check"
             style="@style/login_edit"
-            android:inputType="textPersonName"
+            android:layout_marginTop="8dp"
             android:hint="@string/login_pass_check"
+            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
@@ -89,8 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Getting Start"
-            android:textSize="@dimen/_20sdp"
             android:textColor="@android:color/black"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 

@@ -18,14 +18,10 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start);
 
-        Animation fade_out = AnimationUtils.loadAnimation(this,R.anim.fade_out);
-        Animation fade_in = AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
         binding.startBtn.setOnClickListener(v -> {
-
-//            binding.startBtn.setVisibility(View.GONE);
-//            binding.loginBtn.setVisibility(View.VISIBLE);
-//            binding.registerBtn.setVisibility(View.VISIBLE);
             binding.startBtn.startAnimation(fade_out);
             binding.loginBtn.startAnimation(fade_in);
             binding.registerBtn.startAnimation(fade_in);
@@ -43,18 +39,6 @@ public class StartActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
-        fade_out.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) { }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) { }
-        });
     }
 
 }
