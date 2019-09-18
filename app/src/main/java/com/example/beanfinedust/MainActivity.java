@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // 구글 맵 참조변수 생성
+    
     GoogleMap mMap;
 
     @Override

@@ -9,7 +9,7 @@
         tools:context=".LoginActivity">
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/signup_btn"
             android:layout_width="@dimen/_222sdp"
             android:layout_height="@dimen/_44sdp"
             android:layout_marginTop="24dp"
@@ -34,19 +34,9 @@
         <EditText
             android:id="@+id/email"
             style="@style/login_edit"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:hint="@string/login_email"
             android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
-
-        <EditText
-            android:id="@+id/name"
-            style="@style/login_edit"
-            android:layout_marginTop="16dp"
-            android:hint="@string/login_name"
-            android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -92,7 +82,7 @@
             android:text="Getting Start"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_20sdp"
-            app:layout_constraintStart_toStartOf="@+id/name"
+            app:layout_constraintStart_toStartOf="@+id/email"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
