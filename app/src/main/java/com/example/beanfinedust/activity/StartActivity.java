@@ -1,10 +1,9 @@
-package com.example.beanfinedust;
+package com.example.beanfinedust.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
+import com.example.beanfinedust.R;
 import com.example.beanfinedust.databinding.ActivityStartBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,15 +16,6 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start);
-
-        Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-
-        binding.startBtn.setOnClickListener(v -> {
-            binding.startBtn.startAnimation(fade_out);
-            binding.loginBtn.startAnimation(fade_in);
-            binding.registerBtn.startAnimation(fade_in);
-        });
 
         binding.loginBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);

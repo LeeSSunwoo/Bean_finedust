@@ -1,8 +1,9 @@
-package com.example.beanfinedust;
+package com.example.beanfinedust.activity;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
 
+import com.example.beanfinedust.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // 구글 맵 참조변수 생성
-    
+
     GoogleMap mMap;
 
     @Override
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
     @Override

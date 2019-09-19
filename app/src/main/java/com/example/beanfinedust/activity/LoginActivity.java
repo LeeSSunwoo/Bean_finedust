@@ -1,10 +1,13 @@
-package com.example.beanfinedust;
+package com.example.beanfinedust.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.beanfinedust.CheckEmailPass;
+import com.example.beanfinedust.R;
+import com.example.beanfinedust.SaveSharedPreference;
 import com.example.beanfinedust.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,9 +23,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
-
-    private String email = "";
-    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +45,23 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-
     public void signIn() {
-        email = editTextEmail.getText().toString();
-        password = editTextPassword.getText().toString();
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
 
-        if(CheckEmailPass.isValidEmail(email, this) && CheckEmailPass.isValidPasswd(password, this)) {
+        if (CheckEmailPass.isValidEmail(email, this) && CheckEmailPass.isValidPasswd(password, this)) {
             loginUser(email, password);
         }
     }
 
     // 로그인
-    private void loginUser(String email, String password)
-    {
+    private void loginUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // 로그인 성공
                         Toast.makeText(LoginActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                        SaveSharedPreference.setUserData(this, email, password);
                     } else {
                         // 로그인 실패
                         Toast.makeText(LoginActivity.this, "실패", Toast.LENGTH_SHORT).show();

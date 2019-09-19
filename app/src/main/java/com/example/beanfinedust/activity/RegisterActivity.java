@@ -1,9 +1,11 @@
-package com.example.beanfinedust;
+package com.example.beanfinedust.activity;
 
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.beanfinedust.CheckEmailPass;
+import com.example.beanfinedust.R;
 import com.example.beanfinedust.databinding.ActivityRegisterBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,9 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
-
-    private String email = "";
-    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void singUp() {
-        email = editTextEmail.getText().toString();
-        password = editTextPassword.getText().toString();
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
 
 
         if (CheckEmailPass.isValidEmail(email, this) && CheckEmailPass.isValidPasswd(password, this)) {
