@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.beanfinedust.MapActivity;
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.SaveSharedPreference;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 로그인 성공
                             Toast.makeText(SplashActivity.this, "성공", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         } else {
                             // 로그인 실패
                             Toast.makeText(SplashActivity.this, "실패", Toast.LENGTH_SHORT).show();

@@ -1,12 +1,10 @@
 package com.example.beanfinedust.activity;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 
 import com.example.beanfinedust.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -24,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        FragmentManager fragmentManager = getFragmentManager();
+//        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
 
     }
