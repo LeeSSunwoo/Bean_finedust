@@ -27,4 +27,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="add_device_btn">
+        <item name="android:layout_width">@dimen/_222sdp</item>
+        <item name="android:layout_height">@dimen/_44sdp</item>
+        <item name="android:background">@drawable/add_device_button</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/_23sdp</item>
+    </style>
+
 </resources>
