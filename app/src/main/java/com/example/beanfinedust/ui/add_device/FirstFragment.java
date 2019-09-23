@@ -2,6 +2,7 @@ package com.example.beanfinedust.ui.add_device;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.btn_device).setOnClickListener(v -> {
             QRcodeFragment qRcodeFragment = new QRcodeFragment();
 
+            Log.d("first getActivity",getActivity().toString());
             FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
             transaction1.replace(R.id.container, qRcodeFragment);
 

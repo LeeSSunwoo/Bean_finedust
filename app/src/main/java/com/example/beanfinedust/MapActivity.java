@@ -1,12 +1,18 @@
 package com.example.beanfinedust;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Toast;
 
+import com.example.beanfinedust.ui.add_device.QRcodeFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Objects;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -62,6 +68,23 @@ public class MapActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_LONG).show();
+                // todo
+            } else {
+                QRcodeFragment qRcodeFragment = new QRcodeFragment();
+                qRcodeFragment.onQRCodeRead(this,result.getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
 
 }
