@@ -17,8 +17,9 @@
     <Button
         android:id="@+id/next_btn"
         style="@style/add_device_btn"
+        android:layout_marginBottom="@dimen/_80sdp"
         android:text="다음 단계"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/QR_viewPager" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -127,7 +127,7 @@ public class MyPositionData {
 
                 currentPosition
                         = new LatLng(location.getLatitude(), location.getLongitude());
-
+                MyPositionFragment.setCurrentLatlng(currentPosition);
 
                 String markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + location.getLatitude()
@@ -169,7 +169,7 @@ public class MyPositionData {
         googleMap.animateCamera(cameraUpdate);
 
     }
-    public void setCurrentLocation(LatLng currentLatLng, String markerTitle, String markerSnippet) {
+    public LatLng setCurrentLocation(LatLng currentLatLng, String markerTitle, String markerSnippet) {
 
 
         if (currentMarker != null) currentMarker.remove();
@@ -187,7 +187,7 @@ public class MyPositionData {
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
         googleMap.animateCamera(cameraUpdate);
 
-
+        return currentLatLng;
     }
 
     public String getCurrentAddress(LatLng latlng) {

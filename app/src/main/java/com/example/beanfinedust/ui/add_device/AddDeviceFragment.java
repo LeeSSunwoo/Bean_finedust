@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.beanfinedust.R;
+import com.example.beanfinedust.ui.home.HomeFragment;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -45,6 +47,15 @@ public class AddDeviceFragment extends Fragment {
         transaction.commit();
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void finishFragment(FragmentActivity fragmentActivity){
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, homeFragment);
+
+        transaction.commit();
     }
 
 }
