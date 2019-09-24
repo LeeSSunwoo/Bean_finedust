@@ -213,34 +213,34 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
-        String location = "/기기_데이터/";
+        String location;
         if (add && !user_data) {
             location = "/기기_데이터/" + device;
-            FirebaseDeviceData post = new FirebaseDeviceData(currentLatlng);
+            FirebaseDeviceData post = new FirebaseDeviceData(currentLatlng, device);
             postValues = post.toMap();
+            childUpdates.put(location, postValues);
+            databaseReference.updateChildren(childUpdates);
         } else if (add && user_data) {
-            location = "/사용자_데이터/" + Email.split("@")[0];
-            postValues = new HashMap<>();
-            postValues.put("device_name", device);
-        }
-        childUpdates.put(location, postValues);
-        databaseReference.updateChildren(childUpdates).addOnCompleteListener(getActivity(), task -> {
-            if (task.isSuccessful()) {
-                // 기기 등록 성공
-                if(user_data) {
-                    AddConfirmFragment addConfirmFragment = new AddConfirmFragment();
+            Map<String, Object> user_device = new HashMap<>();
+            user_device.put("serial_number", device);
+            databaseReference.child("사용자_데이터").child(Email.split("@")[0]).child(device).updateChildren(user_device).addOnCompleteListener(getActivity(), task -> {
+                if (task.isSuccessful()) {
+                    // 기기 등록 성공
+                    if(user_data) {
+                        AddConfirmFragment addConfirmFragment = new AddConfirmFragment();
 
-                    Log.d("first getActivity", getActivity().toString());
-                    FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-                    transaction1.replace(R.id.container, addConfirmFragment);
+                        Log.d("first getActivity", getActivity().toString());
+                        FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                        transaction1.replace(R.id.container, addConfirmFragment);
 
-                    transaction1.commit();
+                        transaction1.commit();
+                    }
+                } else {
+                    // 실패
+                    Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                // 실패
-                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
     }
 
     static void setCurrentLatlng(LatLng latlng) {

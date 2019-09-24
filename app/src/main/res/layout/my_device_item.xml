@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="device"
+            type="com.example.beanfinedust.ui.manage_device.MyDeviceList" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:background="@drawable/my_device_item_background"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginVertical="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="@dimen/_76sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/flat_device" />
+
+        <TextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@{device.d_name}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+        <TextView
+            android:id="@+id/device_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{device.d_date}"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@+id/device_name"
+            app:layout_constraintTop_toBottomOf="@+id/device_name" />
+
+        <TextView
+            android:id="@+id/device_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{device.status}"
+            android:textSize="@dimen/_8sdp"
+            app:layout_constraintStart_toStartOf="@+id/device_data"
+            app:layout_constraintTop_toBottomOf="@+id/device_data" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
