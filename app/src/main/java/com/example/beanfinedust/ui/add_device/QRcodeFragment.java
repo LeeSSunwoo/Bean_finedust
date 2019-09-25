@@ -75,7 +75,7 @@ public class QRcodeFragment extends Fragment {
 
     public void onQRCodeRead(FragmentActivity fragmentActivity, String s){
         Log.d("QR",s);
-        MyPositionFragment myPositionFragment = new MyPositionFragment(s);
+        MyPositionFragment myPositionFragment = new MyPositionFragment(s,false);
         Log.d("second getActivity",fragmentActivity.toString());
         FragmentTransaction transaction1 = fragmentActivity.getSupportFragmentManager().beginTransaction();
         transaction1.replace(R.id.container, myPositionFragment);

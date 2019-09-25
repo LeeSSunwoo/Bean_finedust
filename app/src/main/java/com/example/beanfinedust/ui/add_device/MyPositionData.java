@@ -50,6 +50,10 @@ public class MyPositionData {
     private Context context;
     private GoogleMap googleMap;
 
+    public MyPositionData(Context context){
+        this.context = context;
+    }
+
     public MyPositionData(Activity activity, Context context, GoogleMap googleMap, FusedLocationProviderClient mFusedLocationClient){
         this.activity = activity;
         this.context = context;

@@ -2,6 +2,7 @@ package com.example.beanfinedust.ui.manage_device;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,12 @@ import android.widget.Toast;
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.databinding.FragmentRecyclerBinding;
 
+import java.util.Objects;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
@@ -58,6 +62,12 @@ public class RecyclerFragment extends Fragment implements DevicesAdapter.OnItemC
     public void onItemClick(View view, MyDeviceList myDeviceList) {
 
         Toast.makeText(getContext(), myDeviceList.getCode(), Toast.LENGTH_SHORT).show();
+        EditDeviceFragment editDeviceFragment = new EditDeviceFragment(myDeviceList.getCode());
+
+        Log.d("first getActivity",getActivity().toString());
+        FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction1.replace(R.id.manage_container, editDeviceFragment);
+        transaction1.commit();
 
     }
 }

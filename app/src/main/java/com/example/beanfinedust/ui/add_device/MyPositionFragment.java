@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.SaveSharedPreference;
+import com.example.beanfinedust.ui.manage_device.EditDeviceFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -63,12 +65,14 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
 
     private int clicked = 0;
     private String Email;
+    private boolean update;
 
     public MyPositionFragment() {
         // Required empty public constructor
     }
 
-    public MyPositionFragment(String device) {
+    public MyPositionFragment(String device, boolean update) {
+        this.update = update;
         this.device = device;
     }
 
@@ -89,19 +93,31 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
 
         String userData = SaveSharedPreference.getUserData(getActivity());
         Email = userData.split(",")[0];
+        if(update){
+            view.findViewById(R.id.before_image).setVisibility(View.GONE);
+            view.findViewById(R.id.before_text).setVisibility(View.GONE);
+            view.findViewById(R.id.before_const).setVisibility(View.GONE);
+            view.findViewById(R.id.my_map).setVisibility(View.VISIBLE);
+            Button btn = view.findViewById(R.id.add_position_btn);
+            btn.setText("위치 변경하기");
+        }
 
         view.findViewById(R.id.add_position_btn).setOnClickListener(v -> {
-            clicked++;
-            if (clicked == 1) {
-                view.findViewById(R.id.before_image).setVisibility(View.GONE);
-                view.findViewById(R.id.before_text).setVisibility(View.GONE);
-                view.findViewById(R.id.before_const).setVisibility(View.GONE);
-                view.findViewById(R.id.my_map).setVisibility(View.VISIBLE);
-            } else {
-                postFirebaseDatabase(true, false);
-                postFirebaseDatabase(true, true);
-            }
+            if (update) {
 
+                updateLocationData();
+            } else {
+                clicked++;
+                if (clicked == 1) {
+                    view.findViewById(R.id.before_image).setVisibility(View.GONE);
+                    view.findViewById(R.id.before_text).setVisibility(View.GONE);
+                    view.findViewById(R.id.before_const).setVisibility(View.GONE);
+                    view.findViewById(R.id.my_map).setVisibility(View.VISIBLE);
+                } else {
+                    postFirebaseDatabase(true, false);
+                    postFirebaseDatabase(true, true);
+                }
+            }
         });
 
         return view;
@@ -226,7 +242,7 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
             databaseReference.child("사용자_데이터").child(Email.split("@")[0]).child(device).updateChildren(user_device).addOnCompleteListener(getActivity(), task -> {
                 if (task.isSuccessful()) {
                     // 기기 등록 성공
-                    if(user_data) {
+                    if (user_data) {
                         AddConfirmFragment addConfirmFragment = new AddConfirmFragment();
 
                         Log.d("first getActivity", getActivity().toString());
@@ -241,6 +257,26 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
                 }
             });
         }
+    }
+
+    public void updateLocationData() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> data = new HashMap<>();
+        data.put("latitude", currentLatlng.latitude);
+        data.put("longitude", currentLatlng.longitude);
+        databaseReference.child("기기_데이터").child(device).updateChildren(data).addOnCompleteListener(getActivity(), task -> {
+            if (task.isSuccessful()) {
+                EditDeviceFragment editDeviceFragment = new EditDeviceFragment(device);
+
+                FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                transaction1.replace(R.id.manage_container, editDeviceFragment);
+
+                transaction1.commit();
+            } else {
+                // 실패
+                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     static void setCurrentLatlng(LatLng latlng) {

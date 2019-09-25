@@ -75,15 +75,41 @@ public class FirebaseDeviceData {
         this.humi = humi;
     }
 
+    public String getD_date() {
+        return d_date;
+    }
+
+    public void setD_date(String d_date) {
+        this.d_date = d_date;
+    }
+
+    public boolean isSharing_loc() {
+        return sharing_loc;
+    }
+
+    public void setSharing_loc(boolean sharing_loc) {
+        this.sharing_loc = sharing_loc;
+    }
+
+    public boolean isSharing_data() {
+        return sharing_data;
+    }
+
+    public void setSharing_data(boolean sharing_data) {
+        this.sharing_data = sharing_data;
+    }
+
     private double latitude;
     private double longitude;
     private String device_name = "BeanDust Device";
     private String code;
-    private double battery = 0.0;
-    private double volt = 0.0;
-    private double temp = 0.0;
-    private double humi = 0.0;
+    private double battery = 0.1;
+    private double volt = 0.1;
+    private double temp = 0.1;
+    private double humi = 0.1;
     private String d_date;
+    private boolean sharing_loc = true;
+    private boolean sharing_data = true;
 
     public FirebaseDeviceData(){}
 
@@ -91,28 +117,34 @@ public class FirebaseDeviceData {
         for(DataSnapshot data : dataSnapshot.getChildren()){
             switch (data.getKey()){
                 case "serial_number":
-                    this.code = data.child(data.getKey()).getValue().toString();
+                    this.code = data.getValue().toString();
                     break;
                 case "name":
-                    this.device_name = data.child(data.getKey()).getValue().toString();
+                    this.device_name = data.getValue().toString();
                     break;
                 case "latitude":
-                    this.latitude = (double) data.child(data.getKey()).getValue();
+                    this.latitude = (double) data.getValue();
                     break;
                 case "longitude":
-                    this.longitude = (double) data.child(data.getKey()).getValue();
+                    this.longitude = (double) data.getValue();
                     break;
                 case "battery":
-                    this.battery = (double) data.child(data.getKey()).getValue();
+                    this.battery = (double) data.getValue();
                     break;
                 case "volt":
-                    this.volt = (double) data.child(data.getKey()).getValue();
+                    this.volt = (double) data.getValue();
                     break;
                 case "temp":
-                    this.temp = (double) data.child(data.getKey()).getValue();
+                    this.temp = (double) data.getValue();
                     break;
                 case "humi":
-                    this.humi = (double) data.child(data.getKey()).getValue();
+                    this.humi = (double) data.getValue();
+                    break;
+                case "sharing_loc":
+                    this.sharing_loc = (boolean) data.getValue();
+                    break;
+                case "sharing_data":
+                    this.sharing_data = (boolean) data.getValue();
                     break;
             }
         }
@@ -139,6 +171,8 @@ public class FirebaseDeviceData {
         result.put("temp",temp);
         result.put("humi", humi);
         result.put("d_date",d_date);
+        result.put("sharing_loc",sharing_loc);
+        result.put("sharing_data",sharing_data);
         return result;
     }
 }

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView7">
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/data_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -41,11 +42,11 @@
                     app:layout_constraintTop_toTopOf="@+id/textView19" />
 
                 <Switch
-                    android:id="@+id/switch2"
+                    android:id="@+id/loc_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="@+id/textView20"
-                    app:layout_constraintEnd_toEndOf="@+id/switch1"
+                    app:layout_constraintEnd_toEndOf="@+id/data_switch"
                     app:layout_constraintTop_toTopOf="@+id/textView20" />
 
                 <TextView
@@ -62,7 +63,7 @@
                     android:id="@+id/status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView11"
                     app:layout_constraintTop_toBottomOf="@+id/textView11" />
@@ -81,7 +82,7 @@
                     android:id="@+id/battery_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView13"
                     app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -100,7 +101,7 @@
                     android:id="@+id/volt_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView15"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -119,7 +120,7 @@
                     android:id="@+id/temp_humi_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView17"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -217,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView10"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -227,13 +228,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name"
                     android:background="@null"
+                    android:ems="10"
+                    android:hint="최대 20자"
+                    android:inputType="textPersonName"
+                    android:text=""
                     app:layout_constraintBottom_toTopOf="@+id/divider"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    android:maxLength="20">
+
+                    <requestFocus />
+                </EditText>
 
                 <TextView
                     android:id="@+id/position_text"
@@ -245,6 +251,47 @@
                     app:layout_constraintBottom_toTopOf="@+id/divider1"
                     app:layout_constraintStart_toStartOf="@+id/textView9"
                     app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/name_text"
+                    app:layout_constraintEnd_toStartOf="@+id/edit_name_btn"
+                    app:layout_constraintTop_toTopOf="@+id/name_text"
+                    app:srcCompat="@drawable/edit" />
+
+                <TextView
+                    android:id="@+id/edit_name_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수정하기"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+                    app:layout_constraintEnd_toEndOf="@+id/divider"
+                    app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="@dimen/_20sdp"
+                    android:adjustViewBounds="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/position_text"
+                    app:layout_constraintEnd_toStartOf="@+id/edit_location_btn"
+                    app:layout_constraintTop_toTopOf="@+id/position_text"
+                    app:srcCompat="@drawable/edit" />
+
+                <TextView
+                    android:id="@+id/edit_location_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="위치 변경하기"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                    app:layout_constraintEnd_toEndOf="@+id/divider1"
+                    app:layout_constraintTop_toTopOf="@+id/imageView9" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

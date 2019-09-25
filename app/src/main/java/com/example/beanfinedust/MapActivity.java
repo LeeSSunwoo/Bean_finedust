@@ -3,6 +3,8 @@ package com.example.beanfinedust;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.beanfinedust.ui.add_device.QRcodeFragment;
@@ -42,6 +44,10 @@ public class MapActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView emailTextView = headerView.findViewById(R.id.nav_header_email);
+        emailTextView.setText(SaveSharedPreference.getUserData(this).split(",")[0]);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -84,7 +90,5 @@ public class MapActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
 
 }
