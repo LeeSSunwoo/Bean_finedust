@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
+import com.example.beanfinedust.ui.home.HomeFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import androidx.annotation.NonNull;
@@ -21,7 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QRcodeFragment extends Fragment {
+public class QRcodeFragment extends Fragment implements OnBackPressedListener {
 
     private QRViewPager viewPager ;
     private QRPageAdapter qrPageAdapter;
@@ -81,5 +83,15 @@ public class QRcodeFragment extends Fragment {
         transaction1.replace(R.id.container, myPositionFragment);
 
         transaction1.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_const, homeFragment);
+
+        transaction.commit();
     }
 }

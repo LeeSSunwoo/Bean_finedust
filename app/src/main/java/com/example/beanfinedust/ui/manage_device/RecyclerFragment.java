@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.databinding.FragmentRecyclerBinding;
+import com.example.beanfinedust.ui.home.HomeFragment;
 
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ import androidx.lifecycle.ViewModelProviders;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecyclerFragment extends Fragment implements DevicesAdapter.OnItemClickListener{
+public class RecyclerFragment extends Fragment implements DevicesAdapter.OnItemClickListener, OnBackPressedListener {
 
     private ObservableArrayList<MyDeviceList> deviceList;
     private DevicesAdapter devicesAdapter;
@@ -69,5 +71,14 @@ public class RecyclerFragment extends Fragment implements DevicesAdapter.OnItemC
         transaction1.replace(R.id.manage_container, editDeviceFragment);
         transaction1.commit();
 
+    }
+    @Override
+    public void onBackPressed() {
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_const, homeFragment);
+
+        transaction.commit();
     }
 }

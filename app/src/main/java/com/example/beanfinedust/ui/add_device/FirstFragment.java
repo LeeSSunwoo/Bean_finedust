@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
+import com.example.beanfinedust.ui.home.HomeFragment;
 
 import java.util.Objects;
 
@@ -20,7 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements OnBackPressedListener {
 
 
     public FirstFragment() {
@@ -49,5 +51,14 @@ public class FirstFragment extends Fragment {
 
         });
         super.onViewCreated(view, savedInstanceState);
+    }
+    @Override
+    public void onBackPressed() {
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_const, homeFragment);
+
+        transaction.commit();
     }
 }

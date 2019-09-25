@@ -11,8 +11,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ public class HomeViewModel extends ViewModel {
 
     public MutableLiveData<FirebaseDeviceData> addedData;
     public MutableLiveData<FirebaseDeviceData> changedData;
+    MutableLiveData<Map<String, FirebaseDeviceData>> allData;
     private DatabaseReference databaseReference;
     long size;
     List<String> code_list;
@@ -34,17 +36,22 @@ public class HomeViewModel extends ViewModel {
         addedData = new MutableLiveData<>();
         changedData = new MutableLiveData<>();
         codeList = new MutableLiveData<>();
+        allData = new MutableLiveData<>();
         //observableArrayList = new ObservableArrayList<>();
         //mutableLiveData = new MutableLiveData<>();
+
+
+    }
+    public void initDatabase(){
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                size = dataSnapshot.getChildrenCount();
-                code_list = new ArrayList<>();
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    code_list.add(dataSnapshot1.getKey());
+                Map<String, FirebaseDeviceData> map = new HashMap<>();
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    FirebaseDeviceData temp = new FirebaseDeviceData(dataSnapshot1);
+                    map.put(temp.getCode(), temp);
                 }
-                codeList.setValue(code_list);
+                allData.setValue(map);
             }
 
             @Override
@@ -82,7 +89,6 @@ public class HomeViewModel extends ViewModel {
 
             }
         });
-
     }
 
 }

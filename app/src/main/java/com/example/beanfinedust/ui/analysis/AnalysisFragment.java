@@ -6,15 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
+import com.example.beanfinedust.ui.home.HomeFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class AnalysisFragment extends Fragment {
+public class AnalysisFragment extends Fragment implements OnBackPressedListener {
 
     private AnalysisViewModel analysisViewModel;
 
@@ -31,5 +34,15 @@ public class AnalysisFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public void onBackPressed() {
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_const, homeFragment);
+
+        transaction.commit();
     }
 }

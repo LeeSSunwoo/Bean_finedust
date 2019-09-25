@@ -169,17 +169,7 @@ public class MyPositionData {
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
 
-        googleMap.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
-            @Override
-            public void onFinish() {
-                googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
+        googleMap.animateCamera(cameraUpdate);
         if(home) currentMarker.remove();
 
 

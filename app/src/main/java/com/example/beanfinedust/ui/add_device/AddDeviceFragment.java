@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.ui.home.HomeFragment;
 
@@ -17,7 +18,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-public class AddDeviceFragment extends Fragment {
+public class AddDeviceFragment extends Fragment implements OnBackPressedListener {
 
     private AddDeviceViewModel addDeviceViewModel;
 
@@ -53,9 +54,18 @@ public class AddDeviceFragment extends Fragment {
         HomeFragment homeFragment = new HomeFragment();
 
         FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, homeFragment);
+        transaction.replace(R.id.main_const, homeFragment);
 
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_const, homeFragment);
+
+        transaction.commit();
+    }
 }

@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
+import com.example.beanfinedust.databinding.FragmentHomeBinding;
+import com.example.beanfinedust.ui.add_device.FirebaseDeviceData;
 import com.example.beanfinedust.ui.add_device.MyPositionData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -37,10 +39,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-public class HomeFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class HomeFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, OnBackPressedListener {
 
     private HomeViewModel homeViewModel;
     private GoogleMap googleMap;
@@ -49,25 +52,28 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     boolean needRequest = false;
 
     Map<String, Marker> markerMap = new HashMap<>();
-    List<String> codeList;
+    Map<String, FirebaseDeviceData> allDeviceList = new HashMap<>();
 
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private FusedLocationProviderClient mFusedLocationClient;
     private MyPositionData myPositionData;
     View marker_root_view;
+    FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        View root = binding.getRoot();
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
-
         marker_root_view = LayoutInflater.from(getContext()).inflate(R.layout.map_custom_infowindow, null);
+
+        homeViewModel.initDatabase();
 
         homeViewModel.addedData.observe(this, data -> {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -93,32 +99,33 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
             time.setText(data.getCode());
             marker.setTitle(data.getCode());
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
-//            InfoWindowData info = new InfoWindowData();
-//            info.setDust(data.getDevice_name());
-//            info.setTime(data.getCode());
-            //marker.setTag(info);
-//            marker.hideInfoWindow();
-//            marker.showInfoWindow();
         });
 
-        homeViewModel.codeList.observe(this, list -> {
-//            codeList = new ArrayList<>();
-//            codeList.addAll(list);
-//            if(markerMap.size() == codeList.size()){
-//                for(String code:codeList){
-//                    markerMap.get(code).showInfoWindow();
-//                }
-//            }
+        homeViewModel.allData.observe(this, list -> {
+            allDeviceList = list;
         });
 
         mLayout = root.findViewById(R.id.home_layout);
+
 
         return root;
     }
 
     @Override
+    public void onBackPressed() {
+        if(binding.homeDetailLayout.getVisibility() == View.VISIBLE) binding.homeDetailLayout.setVisibility(View.GONE);
+        else getActivity().finish();
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+
+        homeViewModel.initDatabase();
+
+
+
+
 
         myPositionData = new MyPositionData(getActivity(), getContext(), googleMap, mFusedLocationClient, true);
 
@@ -156,6 +163,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         }
         googleMap.setOnMarkerClickListener(this);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        googleMap.setOnMapClickListener(latLng -> {
+            binding.homeDetailLayout.setVisibility(View.GONE);
+        });
 
     }
 
@@ -213,7 +223,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         googleMap.animateCamera(center, new GoogleMap.CancelableCallback() {
             @Override
             public void onFinish() {
-                googleMap.animateCamera(zoom);
+                googleMap.animateCamera(zoom, new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        binding.homeDetailLayout.setVisibility(View.VISIBLE);
+                        FirebaseDeviceData marker_device = allDeviceList.get(marker.getTitle());
+                        binding.addressText.setText(myPositionData.getCurrentAddress(new LatLng(marker_device.getLatitude(), marker_device.getLongitude())));
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
             }
 
             @Override
@@ -226,4 +248,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
         return true;
     }
+
+
 }

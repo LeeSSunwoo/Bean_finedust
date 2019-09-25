@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.beanfinedust.OnBackPressedListener;
 import com.example.beanfinedust.R;
 import com.example.beanfinedust.databinding.EditDeviceFragmentBinding;
 import com.example.beanfinedust.ui.add_device.MyPositionData;
@@ -28,7 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-public class EditDeviceFragment extends Fragment {
+public class EditDeviceFragment extends Fragment implements OnBackPressedListener {
 
     private EditDeviceViewModel mViewModel;
     private String code;
@@ -100,5 +101,11 @@ public class EditDeviceFragment extends Fragment {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        RecyclerFragment recyclerFragment = new RecyclerFragment();
+        FragmentTransaction transaction1 = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction1.replace(R.id.manage_container, recyclerFragment);
+        transaction1.commit();
+    }
 }
