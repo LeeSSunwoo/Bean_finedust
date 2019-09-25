@@ -49,16 +49,18 @@ public class MyPositionData {
     private Activity activity;
     private Context context;
     private GoogleMap googleMap;
+    private boolean home;
 
     public MyPositionData(Context context){
         this.context = context;
     }
 
-    public MyPositionData(Activity activity, Context context, GoogleMap googleMap, FusedLocationProviderClient mFusedLocationClient){
+    public MyPositionData(Activity activity, Context context, GoogleMap googleMap, FusedLocationProviderClient mFusedLocationClient, boolean home){
         this.activity = activity;
         this.context = context;
         this.googleMap = googleMap;
         this.mFusedLocationClient = mFusedLocationClient;
+        this.home = home;
         locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(locationRequest);
@@ -82,7 +84,7 @@ public class MyPositionData {
         builder.create().show();
     }
 
-    void startLocationUpdates() {
+    public void startLocationUpdates() {
 
         if (!checkLocationServicesStatus()) {
 
@@ -153,9 +155,7 @@ public class MyPositionData {
 
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
-
         if (currentMarker != null) currentMarker.remove();
-
 
         LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -163,14 +163,26 @@ public class MyPositionData {
         markerOptions.position(currentLatLng);
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-
+        markerOptions.draggable(false);
 
         currentMarker = googleMap.addMarker(markerOptions);
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
-        googleMap.animateCamera(cameraUpdate);
+
+        googleMap.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+        if(home) currentMarker.remove();
+
+
 
     }
     public LatLng setCurrentLocation(LatLng currentLatLng, String markerTitle, String markerSnippet) {
@@ -188,8 +200,18 @@ public class MyPositionData {
         currentMarker = googleMap.addMarker(markerOptions);
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
-        googleMap.animateCamera(cameraUpdate);
+
+        googleMap.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
 
         return currentLatLng;
     }

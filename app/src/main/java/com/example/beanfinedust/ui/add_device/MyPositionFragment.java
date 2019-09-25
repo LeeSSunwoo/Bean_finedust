@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -124,17 +123,10 @@ public class MyPositionFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
 
-        myPositionData = new MyPositionData(getActivity(), getContext(), googleMap, mFusedLocationClient);
+        myPositionData = new MyPositionData(getActivity(), getContext(), googleMap, mFusedLocationClient, false);
 
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION);

@@ -15,88 +15,44 @@ public class FirebaseDeviceData {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
     public double getLongitude() {
         return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public String getDevice_name() {
         return device_name;
     }
 
-    public void setDevice_name(String name) {
-        this.device_name = name;
-    }
-
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public double getBattery() {
         return battery;
     }
 
-    public void setBattery(double battery) {
-        this.battery = battery;
-    }
-
     public double getVolt() {
         return volt;
-    }
-
-    public void setVolt(double volt) {
-        this.volt = volt;
     }
 
     public double getTemp() {
         return temp;
     }
 
-    public void setTemp(double temp) {
-        this.temp = temp;
-    }
-
     public double getHumi() {
         return humi;
-    }
-
-    public void setHumi(double humi) {
-        this.humi = humi;
     }
 
     public String getD_date() {
         return d_date;
     }
 
-    public void setD_date(String d_date) {
-        this.d_date = d_date;
-    }
-
     public boolean isSharing_loc() {
         return sharing_loc;
     }
 
-    public void setSharing_loc(boolean sharing_loc) {
-        this.sharing_loc = sharing_loc;
-    }
-
     public boolean isSharing_data() {
         return sharing_data;
-    }
-
-    public void setSharing_data(boolean sharing_data) {
-        this.sharing_data = sharing_data;
     }
 
     private double latitude;
