@@ -31,7 +31,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -45,7 +47,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, OnBackPressedListener {
 
-    private HomeViewModel homeViewModel;
+    public HomeViewModel homeViewModel;
     private GoogleMap googleMap;
     private ConstraintLayout mLayout;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -60,6 +62,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     private MyPositionData myPositionData;
     View marker_root_view;
     FragmentHomeBinding binding;
+    String cur_code = "";
+    List<String> userCodeList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,36 +77,67 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
         marker_root_view = LayoutInflater.from(getContext()).inflate(R.layout.map_custom_infowindow, null);
 
-        homeViewModel.initDatabase();
+
+
+        homeViewModel.codeList.observe(this, list -> {
+            userCodeList = list;
+        });
 
         homeViewModel.addedData.observe(this, data -> {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(data.getLatitude(),data.getLongitude()));
-            TextView dust = marker_root_view.findViewById(R.id.dust_text);
-            TextView time = marker_root_view.findViewById(R.id.time_text);
-            dust.setText(data.getDevice_name());
-            time.setText(data.getCode());
-            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
-            markerOptions.title(data.getCode());
+            if (data.getPM1() != -99999) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(data.getLatitude(), data.getLongitude()));
+                TextView dust = marker_root_view.findViewById(R.id.dust_text);
+                TextView time = marker_root_view.findViewById(R.id.time_text);
 
-            Marker m = googleMap.addMarker(markerOptions);
+                dust.setText(data.getDevice_name());
+                time.setText(data.getCode());
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
+                markerOptions.title(data.getCode());
 
-            markerMap.put(data.getCode(),m);
+                Marker m = googleMap.addMarker(markerOptions);
+
+                markerMap.put(data.getCode(), m);
+            }
 
         });
 
         homeViewModel.changedData.observe(this, data -> {
-            Marker marker = markerMap.get(data.getCode());
-            TextView dust = marker_root_view.findViewById(R.id.dust_text);
-            TextView time = marker_root_view.findViewById(R.id.time_text);
-            dust.setText(data.getDevice_name());
-            time.setText(data.getCode());
-            marker.setTitle(data.getCode());
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
+            if (data.getPM1() != -99999) {
+                Marker marker = markerMap.get(data.getCode());
+                TextView dust = marker_root_view.findViewById(R.id.dust_text);
+                TextView time = marker_root_view.findViewById(R.id.time_text);
+                dust.setText(data.getPM2_5());
+                time.setText(data.getCode());
+                marker.setTitle(data.getCode());
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
+            }
         });
 
         homeViewModel.allData.observe(this, list -> {
             allDeviceList = list;
+            if (!cur_code.isEmpty()) {
+                FirebaseDeviceData firebaseDeviceData = allDeviceList.get(cur_code);
+                if (userCodeList.contains(firebaseDeviceData.getCode())) {
+                    binding.userTextVIew.setText("나의 장치");
+                }
+                if (firebaseDeviceData.isSharing_loc()) {
+                    binding.addressText.setText(myPositionData.getCurrentAddress(new LatLng(firebaseDeviceData.getLatitude(), firebaseDeviceData.getLongitude())));
+                }
+                if (firebaseDeviceData.isSharing_data()) {
+                    binding.pm1TextView.setText(String.format("%sµg", firebaseDeviceData.getPM1()));
+                    binding.pm2TextView.setText(String.format("%sµg", firebaseDeviceData.getPM2_5()));
+                    binding.pm10TextView.setText(String.format("%sµg", firebaseDeviceData.getPM10()));
+                    binding.humiTextView.setText(String.format("%s%%", firebaseDeviceData.getHumi()));
+                    binding.tempTextView.setText(String.format("%sºC", firebaseDeviceData.getTemp()));
+                }
+            }
+
+        });
+
+        homeViewModel.deletedData.observe(this, data -> {
+            markerMap.get(data.getCode()).remove();
+            markerMap.remove(data.getCode());
         });
 
         mLayout = root.findViewById(R.id.home_layout);
@@ -113,7 +148,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
     @Override
     public void onBackPressed() {
-        if(binding.homeDetailLayout.getVisibility() == View.VISIBLE) binding.homeDetailLayout.setVisibility(View.GONE);
+        if (binding.homeDetailLayout.getVisibility() == View.VISIBLE)
+            binding.homeDetailLayout.setVisibility(View.GONE);
         else getActivity().finish();
     }
 
@@ -121,10 +157,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
 
-        homeViewModel.initDatabase();
-
-
-
+        homeViewModel.initDatabase(getContext());
 
 
         myPositionData = new MyPositionData(getActivity(), getContext(), googleMap, mFusedLocationClient, true);
@@ -226,9 +259,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                 googleMap.animateCamera(zoom, new GoogleMap.CancelableCallback() {
                     @Override
                     public void onFinish() {
+
                         binding.homeDetailLayout.setVisibility(View.VISIBLE);
                         FirebaseDeviceData marker_device = allDeviceList.get(marker.getTitle());
-                        binding.addressText.setText(myPositionData.getCurrentAddress(new LatLng(marker_device.getLatitude(), marker_device.getLongitude())));
+                        cur_code = marker_device.getCode();
+
+
                     }
 
                     @Override

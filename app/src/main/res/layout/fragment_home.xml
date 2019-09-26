@@ -21,10 +21,10 @@
         android:id="@+id/home_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_330sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView10"
@@ -41,27 +41,200 @@
             android:id="@+id/address_text"
             android:layout_width="0dp"
             android:layout_height="@dimen/_32sdp"
-            android:background="@drawable/home_address_and_btn"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:background="@drawable/home_address_and_btn"
             android:gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:text="상세 주소 비공개됨"
             android:textColor="@android:color/white"
-            android:autoSizeTextType="uniform"
-            android:paddingVertical="@dimen/_4sdp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:background="@drawable/home_dust_title"
-            android:gravity="center"
+            android:id="@+id/user_textVIew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="익명의 누군가"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+        <TextView
+            android:id="@+id/uploaded_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/address_text" />
+            app:layout_constraintStart_toStartOf="@+id/user_textVIew"
+            app:layout_constraintTop_toBottomOf="@+id/user_textVIew" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/address_text">
+
+            <ImageView
+                android:id="@+id/first_img"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:adjustViewBounds="true"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/status_img2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/firstpage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_img"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintEnd_toEndOf="@+id/pm1_text"
+                    app:layout_constraintStart_toStartOf="@+id/pm1_text"
+                    app:layout_constraintTop_toBottomOf="@+id/pm1_text"
+                    app:srcCompat="@drawable/humidity" />
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"
+                    app:srcCompat="@drawable/thermometer" />
+
+                <TextView
+                    android:id="@+id/pm10_text"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/home_dust_title"
+                    android:gravity="center"
+                    android:text="PM\n10"
+                    app:layout_constraintBottom_toBottomOf="@+id/pm10_textView"
+                    app:layout_constraintEnd_toStartOf="@+id/pm10_textView"
+                    app:layout_constraintTop_toTopOf="@+id/pm10_textView" />
+
+                <TextView
+                    android:id="@+id/pm1_text"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginStart="32dp"
+                    android:background="@drawable/home_dust_title"
+                    android:gravity="center"
+                    android:text="PM\n1.0"
+                    app:layout_constraintBottom_toBottomOf="@+id/pm10_text"
+                    app:layout_constraintStart_toEndOf="@+id/divider3"
+                    app:layout_constraintTop_toTopOf="@+id/pm10_text" />
+
+                <TextView
+                    android:id="@+id/pm2_text"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/home_dust_title"
+                    android:gravity="center"
+                    android:text="PM\n2.5"
+                    app:layout_constraintStart_toStartOf="@+id/pm10_text"
+                    app:layout_constraintTop_toBottomOf="@+id/pm10_text" />
+
+                <TextView
+                    android:id="@+id/pm10_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="비공개됨"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintEnd_toStartOf="@+id/divider3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/pm1_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="비공개됨"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/pm1_text"
+                    app:layout_constraintStart_toEndOf="@+id/pm1_text"
+                    app:layout_constraintTop_toTopOf="@+id/pm1_text" />
+
+                <TextView
+                    android:id="@+id/pm2_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="비공개됨"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_20sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/pm2_text"
+                    app:layout_constraintStart_toEndOf="@+id/pm2_text"
+                    app:layout_constraintTop_toTopOf="@+id/pm2_text" />
+
+                <TextView
+                    android:id="@+id/humi_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="비공개됨"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+                    app:layout_constraintStart_toEndOf="@+id/imageView12"
+                    app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+                <TextView
+                    android:id="@+id/temp_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="비공개됨"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13"
+                    app:layout_constraintTop_toTopOf="@+id/imageView13" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

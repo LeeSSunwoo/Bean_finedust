@@ -65,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                         SaveSharedPreference.setUserData(this, email, password);
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        finish();
+                        StartActivity activity = new StartActivity();
+                        activity.finish();
                     } else {
                         // 로그인 실패
                         Toast.makeText(LoginActivity.this, "실패", Toast.LENGTH_SHORT).show();

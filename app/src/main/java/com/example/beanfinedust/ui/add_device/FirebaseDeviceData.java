@@ -55,17 +55,38 @@ public class FirebaseDeviceData {
         return sharing_data;
     }
 
+    public int getERR() {
+        return ERR;
+    }
+
+    public int getPM1() {
+        return PM1;
+    }
+
+    public int getPM2_5() {
+        return PM2_5;
+    }
+
+    public int getPM10() {
+        return PM10;
+    }
+
     private double latitude;
     private double longitude;
     private String device_name = "BeanDust Device";
     private String code;
     private double battery = 0.1;
     private double volt = 0.1;
-    private double temp = 0.1;
-    private double humi = 0.1;
+    private int temp = 1;
+    private int humi = 1;
     private String d_date;
     private boolean sharing_loc = true;
     private boolean sharing_data = true;
+    private int ERR = 0;
+    private int PM1 = -99999;
+    private int PM2_5 = 0;
+    private int PM10 = 0;
+    private String UPDATED_TIME = ".";
 
     public FirebaseDeviceData(){}
 
@@ -84,17 +105,17 @@ public class FirebaseDeviceData {
                 case "longitude":
                     this.longitude = (double) data.getValue();
                     break;
-                case "battery":
+                case "V_SYSTEM":
                     this.battery = (double) data.getValue();
                     break;
-                case "volt":
+                case "V_SOLAR":
                     this.volt = (double) data.getValue();
                     break;
-                case "temp":
-                    this.temp = (double) data.getValue();
+                case "TEMPURATURE":
+                    this.temp = Integer.valueOf(String.valueOf(data.getValue()));
                     break;
-                case "humi":
-                    this.humi = (double) data.getValue();
+                case "HUMIDITY":
+                    this.humi = Integer.valueOf(String.valueOf(data.getValue()));
                     break;
                 case "sharing_loc":
                     this.sharing_loc = (boolean) data.getValue();
@@ -102,6 +123,20 @@ public class FirebaseDeviceData {
                 case "sharing_data":
                     this.sharing_data = (boolean) data.getValue();
                     break;
+                case "ERR":
+                    this.ERR = Integer.valueOf(String.valueOf(data.getValue()));
+                    break;
+                case "PM1":
+                    this.PM1 = Integer.valueOf(String.valueOf(data.getValue()));
+                    break;
+                case "PM2_5":
+                    this.PM2_5 = Integer.valueOf(String.valueOf(data.getValue()));
+                    break;
+                case "PM10":
+                    this.PM10 = Integer.valueOf(String.valueOf(data.getValue()));
+                    break;
+                case "UPDATED_TIME":
+                    this.UPDATED_TIME = data.getValue().toString();
             }
         }
     }
@@ -122,13 +157,18 @@ public class FirebaseDeviceData {
         result.put("name", device_name);
         result.put("latitude", latitude);
         result.put("longitude", longitude);
-        result.put("battery", battery);
-        result.put("volt", volt);
-        result.put("temp",temp);
-        result.put("humi", humi);
+        result.put("V_SYSTEM", battery);
+        result.put("V_SOLAR", volt);
+        result.put("TEMPURATURE",temp);
+        result.put("HUMIDITY", humi);
         result.put("d_date",d_date);
         result.put("sharing_loc",sharing_loc);
         result.put("sharing_data",sharing_data);
+        result.put("PM1",PM1);
+        result.put("PM2_5",PM2_5);
+        result.put("PM10",PM10);
+        result.put("ERR",ERR);
+        result.put("UPDATED_TIME",UPDATED_TIME);
         return result;
     }
 }

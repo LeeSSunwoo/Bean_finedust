@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.beanfinedust.activity.LoginActivity;
 import com.example.beanfinedust.ui.add_device.AddDeviceFragment;
 import com.example.beanfinedust.ui.add_device.QRcodeFragment;
 import com.example.beanfinedust.ui.analysis.AnalysisFragment;
@@ -106,9 +106,9 @@ public class MapActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.map, menu);
 
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.activity_map_drawer,menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.activity_map_drawer,menu);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         return true;
     }
@@ -119,6 +119,12 @@ public class MapActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawer.openDrawer(navigationView);
                 break;
+            case R.id.action_settings:
+                SaveSharedPreference.clearUserData(getApplication());
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

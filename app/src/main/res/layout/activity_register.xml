@@ -53,14 +53,14 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="@dimen/_233sdp"
+            android:layout_width="@dimen/_190sdp"
             android:layout_height="@dimen/_233sdp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_des"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bean_logo" />
+            app:srcCompat="@drawable/bean" />
 
         <TextView
             android:id="@+id/textView"

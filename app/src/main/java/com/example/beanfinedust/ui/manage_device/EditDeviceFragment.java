@@ -57,7 +57,7 @@ public class EditDeviceFragment extends Fragment implements OnBackPressedListene
             binding.nameText.setText(d_name);
             binding.serialText.setText(firebaseDeviceData.getCode());
             binding.positionText.setText(myPositionData.getCurrentAddress(new LatLng(firebaseDeviceData.getLatitude(), firebaseDeviceData.getLongitude())));
-            binding.batteryText.setText(String.valueOf(firebaseDeviceData.getBattery()));
+            binding.batteryText.setText(String.valueOf(firebaseDeviceData.getBattery())+"V, "+map(firebaseDeviceData.getBattery(), 0.0, 12.6, 0, 100)+"%");
             binding.voltText.setText(firebaseDeviceData.getVolt()+"V");
             binding.tempHumiText.setText(firebaseDeviceData.getTemp()+" / "+firebaseDeviceData.getHumi());
             //binding.statusText.setText(firebaseDeviceData.getDevice_name());
@@ -98,6 +98,10 @@ public class EditDeviceFragment extends Fragment implements OnBackPressedListene
         });
 
         return view;
+    }
+
+    public int map(double x, double in_min, double in_max, double out_min, double out_max){
+        return (int)((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
     }
 
 
