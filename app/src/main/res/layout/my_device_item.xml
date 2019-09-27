@@ -6,7 +6,7 @@
     <data>
         <variable
             name="device"
-            type="com.example.beanfinedust.ui.manage_device.MyDeviceList" />
+            type="com.bean.beanfinedust.ui.manage_device.MyDeviceList" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

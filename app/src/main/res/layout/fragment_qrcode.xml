@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.add_device.QRcodeFragment">
 
-    <com.example.beanfinedust.ui.add_device.QRViewPager
+    <com.bean.beanfinedust.ui.add_device.QRViewPager
         android:id="@+id/QR_viewPager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_400sdp"

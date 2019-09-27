@@ -1,4 +1,4 @@
-package com.example.beanfinedust.ui.add_device;
+package com.bean.beanfinedust.ui.add_device;
 
 import android.content.Context;
 import android.util.AttributeSet;

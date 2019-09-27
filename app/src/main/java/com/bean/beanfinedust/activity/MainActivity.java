@@ -1,8 +1,8 @@
-package com.example.beanfinedust.activity;
+package com.bean.beanfinedust.activity;
 
 import android.os.Bundle;
 
-import com.example.beanfinedust.R;
+import com.bean.beanfinedust.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

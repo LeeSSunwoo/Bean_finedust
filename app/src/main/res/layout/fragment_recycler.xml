@@ -8,7 +8,7 @@
     <data>
 
         <import type="androidx.databinding.ObservableArrayList" />
-        <import type="com.example.beanfinedust.ui.manage_device.MyDeviceList" />
+        <import type="com.bean.beanfinedust.ui.manage_device.MyDeviceList" />
 
         <variable
             name="deviceList"

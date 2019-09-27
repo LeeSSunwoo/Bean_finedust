@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.beanfinedust.ui.home.HomeFragment"
+        android:name="com.bean.beanfinedust.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_analysis"
-        android:name="com.example.beanfinedust.ui.analysis.AnalysisFragment"
+        android:name="com.bean.beanfinedust.ui.analysis.AnalysisFragment"
         android:label="@string/menu_analysis"
         tools:layout="@layout/fragment_analysis" />
 
     <fragment
         android:id="@+id/nav_add_device"
-        android:name="com.example.beanfinedust.ui.add_device.AddDeviceFragment"
+        android:name="com.bean.beanfinedust.ui.add_device.AddDeviceFragment"
         android:label="@string/menu_add_device"
         tools:layout="@layout/fragment_add_device" />
 
     <fragment
         android:id="@+id/nav_manage_device"
-        android:name="com.example.beanfinedust.ui.manage_device.ManageDeviceFragment"
+        android:name="com.bean.beanfinedust.ui.manage_device.ManageDeviceFragment"
         android:label="@string/menu_manage_device"
         tools:layout="@layout/fragment_manage_device" />
 

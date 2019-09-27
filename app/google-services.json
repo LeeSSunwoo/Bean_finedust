@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:383897346811:android:e49a5f8b022d302c",
         "android_client_info": {
-          "package_name": "com.example.beanfinedust"
+          "package_name": "com.bean.beanfinedust"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "383897346811-v1c8lnuoinktfbgpl873i6cn06l4pc5t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.beanfinedust",
+            "package_name": "com.bean.beanfinedust",
             "certificate_hash": "a1e1045e7e00b81b5f67874e5efab688a426e3d8"
           }
         },

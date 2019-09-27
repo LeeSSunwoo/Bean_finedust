@@ -1,4 +1,4 @@
-package com.example.beanfinedust.ui.home;
+package com.bean.beanfinedust.ui.home;
 
 public class InfoWindowData {
     private String dust;

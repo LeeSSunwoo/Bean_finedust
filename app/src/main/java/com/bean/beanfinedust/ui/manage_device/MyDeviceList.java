@@ -1,4 +1,4 @@
-package com.example.beanfinedust.ui.manage_device;
+package com.bean.beanfinedust.ui.manage_device;
 
 import android.util.Log;
 

@@ -1,6 +1,6 @@
-package com.example.beanfinedust.ui.manage_device;
+package com.bean.beanfinedust.ui.manage_device;
 
-import com.example.beanfinedust.ui.add_device.FirebaseDeviceData;
+import com.bean.beanfinedust.ui.add_device.FirebaseDeviceData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +21,7 @@ public class EditDeviceViewModel extends ViewModel {
 
     public void initDatabase(String code){
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("기기_데이터").child(code).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("기기데이터").child(code).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 firebaseDeviceData.setValue(new FirebaseDeviceData(dataSnapshot));
