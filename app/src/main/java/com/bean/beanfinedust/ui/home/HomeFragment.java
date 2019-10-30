@@ -81,10 +81,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
         homeViewModel.codeList.observe(this, list -> {
             userCodeList = list;
+            Log.e("list CHECK",userCodeList.toString());
         });
 
         homeViewModel.addedData.observe(this, data -> {
-            //if (data.getPM1() != -99999) {
+
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(data.getLatitude(), data.getLongitude()));
                 TextView dust = marker_root_view.findViewById(R.id.dust_text);
@@ -94,21 +95,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                 time.setText(data.getCode());
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
                 markerOptions.title(data.getCode());
-
-                Marker m = googleMap.addMarker(markerOptions);
-
-                markerMap.put(data.getCode(), m);
-            //}
+            Marker m = googleMap.addMarker(markerOptions);
+            if (data.getPM1() == -99999) { m.setVisible(false); }
+            markerMap.put(data.getCode(), m);
 
         });
 
         homeViewModel.changedData.observe(this, data -> {
             if (data.getPM1() != -99999) {
                 Marker marker = markerMap.get(data.getCode());
+                View marker_root_view = LayoutInflater.from(getContext()).inflate(R.layout.map_custom_infowindow, null);
                 TextView dust = marker_root_view.findViewById(R.id.dust_text);
                 TextView time = marker_root_view.findViewById(R.id.time_text);
                 dust.setText(String.valueOf(data.getPM2_5()));
                 time.setText(data.getCode());
+                if (!marker.isVisible()) marker.setVisible(true);
                 marker.setTitle(data.getCode());
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(getContext(), marker_root_view)));
             }
@@ -118,7 +119,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
             allDeviceList = list;
             if (!cur_code.isEmpty()) {
                 FirebaseDeviceData firebaseDeviceData = allDeviceList.get(cur_code);
-                if (userCodeList.contains(firebaseDeviceData.getCode())) {
+                if (userCodeList.contains("{serial_number="+cur_code+"}")) {
                     binding.userTextVIew.setText("나의 장치");
                 }
                 if (firebaseDeviceData.isSharing_loc()) {
@@ -263,7 +264,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                         binding.homeDetailLayout.setVisibility(View.VISIBLE);
                         FirebaseDeviceData marker_device = allDeviceList.get(marker.getTitle());
                         cur_code = marker_device.getCode();
-                        if (userCodeList.contains(marker_device.getCode())) {
+                        if (userCodeList.contains("{serial_number="+cur_code+"}")) {
                             binding.userTextVIew.setText("나의 장치");
                         }
                         if (marker_device.isSharing_loc()) {

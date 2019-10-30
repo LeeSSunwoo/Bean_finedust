@@ -32,14 +32,13 @@ public class HomeViewModel extends ViewModel {
     MutableLiveData<Map<String, FirebaseDeviceData>> allData;
     private DatabaseReference databaseReference;
     private DatabaseReference userReference;
-    HomeFragment homeFragment = new HomeFragment();
     long size;
     String id;
 
     MutableLiveData<List<String>> codeList;
 
     public HomeViewModel() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("기기데이터");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         userReference = FirebaseDatabase.getInstance().getReference("사용자_데이터");
         addedData = new MutableLiveData<>();
         changedData = new MutableLiveData<>();
@@ -53,11 +52,11 @@ public class HomeViewModel extends ViewModel {
 
     }
     public void initDatabase(Context context){
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child("기기데이터").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, FirebaseDeviceData> map = new HashMap<>();
-
+                Log.e("first Count CHECK", String.valueOf(dataSnapshot.getChildrenCount()));
                 for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     FirebaseDeviceData temp = new FirebaseDeviceData(dataSnapshot1);
 
@@ -74,7 +73,7 @@ public class HomeViewModel extends ViewModel {
             }
         });
         id = SaveSharedPreference.getUserData(context).split("@")[0];
-        userReference.child(id).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("사용자_데이터").child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> code_list = new ArrayList<>();
@@ -91,7 +90,7 @@ public class HomeViewModel extends ViewModel {
             }
         });
 
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.child("기기데이터").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("onChildAdded", String.valueOf(dataSnapshot.getChildrenCount()));

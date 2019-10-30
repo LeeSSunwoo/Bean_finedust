@@ -83,7 +83,7 @@ public class FirebaseDeviceData {
     private boolean sharing_loc = true;
     private boolean sharing_data = true;
     private int ERR = 0;
-    private int PM1 = 10;
+    private int PM1 = -99999;
     private int PM2_5 = 10;
     private int PM10 = 20;
     private String UPDATED_TIME = ".";
